@@ -18,6 +18,7 @@ public class UserModel {
     private String surname;
     private String email;
     private UserRole userRole;
+    private String gender;
     private String password;
     @OneToMany(cascade = CascadeType.ALL)
     private List<WasteModel> listOfWaste;

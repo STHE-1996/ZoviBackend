@@ -38,6 +38,7 @@ public class UserImplementation implements Userservice {
          userModel.setName(request.getName());
          userModel.setSurname(request.getSurname());
          userModel.setEmail(request.getEmail());
+         userModel.setGender(request.getGender());
          userModel.setUserRole(request.getUserRole());
          commonService.passwordMatchesConfirmation(request.getPassword(), request.getConfirmPassword());
 //         passwordUtil.encode(request.getPassword());
