@@ -18,4 +18,7 @@ public class GenericResponse {
     private String responseCode;
     private String data;
 
+    public LoginResponse setRole(String role) {
+        return null;
+    }
 }

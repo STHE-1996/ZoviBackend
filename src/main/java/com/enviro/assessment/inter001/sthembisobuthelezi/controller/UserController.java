@@ -5,12 +5,15 @@ import com.enviro.assessment.inter001.sthembisobuthelezi.response.GenericRespons
 import com.enviro.assessment.inter001.sthembisobuthelezi.model.UserModel;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.LoginRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.RegistrationRequest;
+import com.enviro.assessment.inter001.sthembisobuthelezi.response.LoginResponse;
 import com.enviro.assessment.inter001.sthembisobuthelezi.service.Userservice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -40,16 +43,30 @@ public class UserController {
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<GenericResponse> login(@RequestBody LoginRequest request) {
-        Optional<String> token = userservice.login(request);
-        return ResponseEntity.ok(new GenericResponse()
-                .setResponseCode(HttpStatusEnum.SUCCESSFUL.getCode())
-                .setDeveloperMessage(HttpStatusEnum.SUCCESSFUL.getDeveloperMessage())
-                .setResponseMessage("Successfully Logged in")
-                .setData(token.get()));
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        Optional<Map<String, String>> loginResult = userservice.login(request);
+
+        if (loginResult.isPresent()) {
+            Map<String, String> result = loginResult.get();
+            String token = result.get("token");
+            String role = result.get("role");
+
+            return ResponseEntity.ok(new LoginResponse()
+                    .setResponseCode(HttpStatusEnum.SUCCESSFUL.getCode())
+                    .setDeveloperMessage(HttpStatusEnum.SUCCESSFUL.getDeveloperMessage())
+                    .setResponseMessage("Successfully Logged in")
+                    .setData(token)
+                    .setRole(role));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((LoginResponse) new LoginResponse()
+                    .setResponseCode(HttpStatusEnum.UNAUTHORIZED.getCode())
+                    .setDeveloperMessage(HttpStatusEnum.UNAUTHORIZED.getDeveloperMessage())
+                    .setResponseMessage("Login failed"));
+        }
     }
 
-    @PostMapping("/User/{userId}")
+
+    @GetMapping("/User/{userId}")
     public Optional<UserModel> User(@PathVariable String userId) {
         return userservice.User(userId);
     }

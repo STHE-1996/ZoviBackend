@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 public class RecyclingBinLocations {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String location;
     private String type;

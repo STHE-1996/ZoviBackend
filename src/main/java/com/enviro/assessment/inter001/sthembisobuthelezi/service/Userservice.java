@@ -5,6 +5,7 @@ import com.enviro.assessment.inter001.sthembisobuthelezi.requests.LoginRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.RegistrationRequest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface Userservice {
@@ -13,7 +14,7 @@ public interface Userservice {
     List<UserModel> users();
 
 
-    Optional<String> login(LoginRequest request);
+    Optional<Map<String, String>> login(LoginRequest request);
 
     Optional<UserModel> User(String userId);
 }

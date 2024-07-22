@@ -18,7 +18,8 @@ public enum HttpStatusEnum {
 
     EMAIL_ERROR("400","email.error","Email must be provided", "200"),
 
-    SERVER_ERROR("500", "server.error", "Failed", "500");
+    SERVER_ERROR("500", "server.error", "Failed", "500"),
+    UNAUTHORIZED("500","server.error", "Failed", "500");
 
     private String responseCode;
     private String responseMessageKey;

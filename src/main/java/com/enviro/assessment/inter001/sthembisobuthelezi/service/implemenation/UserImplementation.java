@@ -11,7 +11,9 @@ import com.enviro.assessment.inter001.sthembisobuthelezi.requests.RegistrationRe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -28,6 +30,10 @@ public class UserImplementation implements Userservice {
 
     @Override
     public UserModel RegisterUser(RegistrationRequest request){
+        Optional<UserModel> user = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
+        if (user.isPresent()) {
+            throw new RuntimeException("User with this email already exists");
+        }
          UserModel userModel = new UserModel();
          userModel.setName(request.getName());
          userModel.setSurname(request.getSurname());
@@ -46,21 +52,26 @@ public class UserImplementation implements Userservice {
 
 
     @Override
-    public Optional<String> login(LoginRequest request){
+    public Optional<Map<String, String>> login(LoginRequest request) {
         Optional<UserModel> userModel = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
 
         if (userModel.isPresent()) {
             if (request.getPassword().equals(userModel.get().getPassword())) {
                 JwtUtil jwtUtil = new JwtUtil();
                 String token = jwtUtil.generateToken(userModel.get().getId());
-                System.out.println(token);
-                return Optional.of(token);
+                String role = String.valueOf(userModel.get().getUserRole());
+
+                Map<String, String> response = new HashMap<>();
+                response.put("token", token);
+                response.put("role", role);
+                return Optional.of(response);
             } else {
                 throw new RuntimeException("Password is incorrect");
             }
         }
         return Optional.empty();
     }
+
 
     @Override
     public Optional<UserModel> User(String userId){
