@@ -1,5 +1,6 @@
 package com.enviro.assessment.inter001.sthembisobuthelezi.service.implemenation;
 
+import com.enviro.assessment.inter001.sthembisobuthelezi.repository.RecyclingBinLocationsRepository;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.RecyclingRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.UpdateRecyclingRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.service.RecyclingBinService;
@@ -16,6 +17,10 @@ import java.util.Optional;
 
 @Service
 public class RecyclingBinServiceImplementation implements RecyclingBinService {
+
+
+    @Autowired
+   private RecyclingBinLocationsRepository recyclingBinLocationsRepository;
 
 @Autowired
 private UserRepository userRepository;
@@ -114,5 +119,13 @@ private UserRepository userRepository;
             throw new ChangeSetPersister.NotFoundException();
         }
     }
+
+
+    @Override
+    public List<RecyclingBinLocations> getAllRecycling() {
+        // Assuming you have a repository or service to fetch all RecyclingBinLocations
+        return recyclingBinLocationsRepository.findAll();
+    }
+
 
 }

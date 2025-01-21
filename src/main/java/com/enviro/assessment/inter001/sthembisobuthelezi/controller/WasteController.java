@@ -1,6 +1,7 @@
 package com.enviro.assessment.inter001.sthembisobuthelezi.controller;
 
 import com.enviro.assessment.inter001.sthembisobuthelezi.model.WasteModel;
+import com.enviro.assessment.inter001.sthembisobuthelezi.requests.UpdateStatusRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.UpdateWasteRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.WasteRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.service.WasteService;
@@ -47,5 +48,10 @@ public class WasteController {
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @PutMapping("/updateStatus")
+    public WasteModel updateWasteStatus(@RequestBody UpdateStatusRequest request) {
+        return wasteService.updateWasteStatus(request.getId(), request.getStatus());
     }
 }

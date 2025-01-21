@@ -7,7 +7,7 @@ public enum HttpStatusEnum {
     VERIFICATION_STATUS("400","verification_status_error", "Verification status error", "200"),
     PHONE_NUMBER_VALIDATION("400","phone_number_error", "Phone number error", "200"),
     NOT_FOUND("400","phone.number.not.found", "phone number not found", "200"),
-
+    PASSWORD_DO_NOT_MATCH("500", "password.not.match","password not match","200"),
     ACCOUNT_EXIST("400","account.exist", "Account already exist", "200"),
     EMAIL_INVALID("400","email.invalid", "Email you entered is invalid", "200"),
     USERNAME_ERROR("400","username.error","Username must be provided", "200"),
@@ -15,6 +15,8 @@ public enum HttpStatusEnum {
     CHURCH_ERROR("400","church.error","Church must be provided", "200"),
     GENDER_ERROR("400","gender.error","Gender must be provided", "200"),
     PROVINCE_ERROR("400","province.error","Province must be provided", "200"),
+    ACCOUNT_NOT_EXIST("500", "account.dont.exist", "account doest not exist", "200"),
+    PIN_INCORRECT("500", "incorrect.incorrect", "incorrect pin", "200"),
 
     EMAIL_ERROR("400","email.error","Email must be provided", "200"),
 

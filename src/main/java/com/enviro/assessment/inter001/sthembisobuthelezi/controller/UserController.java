@@ -1,17 +1,23 @@
 package com.enviro.assessment.inter001.sthembisobuthelezi.controller;
 
 import com.enviro.assessment.inter001.sthembisobuthelezi.enums.HttpStatusEnum;
+import com.enviro.assessment.inter001.sthembisobuthelezi.model.WasteModel;
+import com.enviro.assessment.inter001.sthembisobuthelezi.requests.ForgotPasswordRequest;
+import com.enviro.assessment.inter001.sthembisobuthelezi.requests.UpdatePasswordRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.response.GenericResponse;
 import com.enviro.assessment.inter001.sthembisobuthelezi.model.UserModel;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.LoginRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.RegistrationRequest;
 import com.enviro.assessment.inter001.sthembisobuthelezi.response.LoginResponse;
 import com.enviro.assessment.inter001.sthembisobuthelezi.service.Userservice;
+import com.enviro.assessment.inter001.sthembisobuthelezi.service.implemenation.UserImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,7 +29,7 @@ public class UserController {
     @Autowired
     private Userservice userservice;
     @PostMapping("/RegisterUser")
-    public ResponseEntity<GenericResponse> RegisterUser(@RequestBody RegistrationRequest request){
+    public ResponseEntity<GenericResponse> RegisterUser(@RequestBody RegistrationRequest request) throws IOException {
         UserModel userModel= userservice.RegisterUser(request);
         return ResponseEntity.ok(new GenericResponse()
                 .setResponseCode(HttpStatusEnum.SUCCESSFUL.getCode())
@@ -65,9 +71,52 @@ public class UserController {
         }
     }
 
+    @PostMapping("/VerifyAccount")
+    public ResponseEntity<?> verifyAccount(@RequestBody Map<String, String> requestBody) {
+        String enteredPin = requestBody.get("enteredPin");
+        System.out.println("Received PIN: " + enteredPin);
+
+        try {
+            String verificationMessage = String.valueOf(userservice.verifyAccountMethod(enteredPin));
+            return ResponseEntity.ok(verificationMessage);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("The account you are trying to verify does not exist"));
+        }
+    }
+
+
 
     @GetMapping("/User/{userId}")
     public Optional<UserModel> User(@PathVariable String userId) {
         return userservice.User(userId);
+    }
+
+    private Map<String, String> createErrorResponse(String errorMessage) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", errorMessage);
+        return errorResponse;
+    }
+
+
+    @PostMapping("/ForgotPassword")
+    public ResponseEntity<?> ForgotPassword(@RequestBody ForgotPasswordRequest request) throws IOException {
+        UserImplementation.ForgotPasswordResponse response = userservice.forgotPassword(request.getEmail());
+
+        return ResponseEntity.ok(new GenericResponse()
+                .setResponseCode(HttpStatusEnum.SUCCESSFUL.getCode())
+                .setDeveloperMessage(HttpStatusEnum.SUCCESSFUL.getDeveloperMessage())
+                .setResponseMessage(response.getMessage()));
+    }
+
+    @PostMapping("/UpdatePassword")
+    public ResponseEntity<?> UpdatePassword(@RequestBody UpdatePasswordRequest request) {
+        return new ResponseEntity<>(userservice.updatePassword(request.getEmail(), request.getOtpPin(), request.getNewPassword(), request.getConfirmNewPassword()), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getAllWasteForStaff")
+    public List<WasteModel> getAllWaste() {
+        return userservice.getAllWaste();
     }
 }

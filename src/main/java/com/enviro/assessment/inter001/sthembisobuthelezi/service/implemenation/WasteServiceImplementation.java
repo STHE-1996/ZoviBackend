@@ -2,6 +2,7 @@ package com.enviro.assessment.inter001.sthembisobuthelezi.service.implemenation;
 
 import com.enviro.assessment.inter001.sthembisobuthelezi.model.WasteModel;
 import com.enviro.assessment.inter001.sthembisobuthelezi.repository.UserRepository;
+import com.enviro.assessment.inter001.sthembisobuthelezi.repository.WasteRepository;
 import com.enviro.assessment.inter001.sthembisobuthelezi.service.CommonService;
 import com.enviro.assessment.inter001.sthembisobuthelezi.model.UserModel;
 import com.enviro.assessment.inter001.sthembisobuthelezi.requests.UpdateWasteRequest;
@@ -18,6 +19,9 @@ public class WasteServiceImplementation implements WasteService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WasteRepository wasteRepository;
 
     @Autowired
     private CommonService commonService;
@@ -40,6 +44,8 @@ public class WasteServiceImplementation implements WasteService {
             wasteModel.setQuantity(request.getQuantity());
             wasteModel.setDate(new Date().toString());
             wasteModel.setUserRole(request.getUserRole());
+            wasteModel.setLocation(request.getLocation());
+            wasteModel.setDayOfRecycling(request.getDayOfRecycling());
 
             userModel.getListOfWaste().add(wasteModel);
             userRepository.save(userModel);
@@ -67,7 +73,8 @@ public class WasteServiceImplementation implements WasteService {
                 wasteModel.setQuantity(request.getQuantity());
                 wasteModel.setDate(new Date().toString());
                 wasteModel.setUserRole(request.getUserRole());
-
+//                wasteModel.setLocation(request.getLocation());
+//                wasteModel.setDay(request.getDay());
                 userRepository.save(userModel);
                 return wasteModel;
             } else {
@@ -123,6 +130,15 @@ public class WasteServiceImplementation implements WasteService {
         } else {
             throw new ChangeSetPersister.NotFoundException();
         }
+    }
+
+
+    @Override
+    public WasteModel updateWasteStatus(String id, String status) {
+        WasteModel waste = wasteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Waste not found with ID: " + id));
+        waste.setStatus(status);
+        return wasteRepository.save(waste);
     }
 
 

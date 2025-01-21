@@ -15,4 +15,6 @@ public interface WasteService {
     void deleteWasteRecord(String userId, String wasteId) throws ChangeSetPersister.NotFoundException;
 
     List<WasteModel> getAllWasteRecords(String userId) throws ChangeSetPersister.NotFoundException;
+
+    WasteModel updateWasteStatus(String id, String status);
 }

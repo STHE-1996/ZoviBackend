@@ -15,4 +15,6 @@ public interface RecyclingBinService {
     void deleteRecyclingLocation(String userId, String recyclingId) throws ChangeSetPersister.NotFoundException;
 
     List<RecyclingBinLocations> getAllRecycling(String userId) throws ChangeSetPersister.NotFoundException;
+
+    List<RecyclingBinLocations> getAllRecycling();
 }

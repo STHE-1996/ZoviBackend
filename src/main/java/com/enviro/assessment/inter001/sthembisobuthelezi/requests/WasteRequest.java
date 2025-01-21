@@ -10,4 +10,6 @@ public class WasteRequest {
     private String type;
     private String quantity;
     private UserRole userRole;
+    private String location;
+    private String dayOfRecycling;
 }

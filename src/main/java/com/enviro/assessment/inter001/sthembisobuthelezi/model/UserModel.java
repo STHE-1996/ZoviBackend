@@ -18,6 +18,8 @@ public class UserModel {
     private String surname;
     private String email;
     private UserRole userRole;
+    private String verificationStatus = "false";
+    private String pin;
     private String gender;
     private String password;
     @OneToMany(cascade = CascadeType.ALL)

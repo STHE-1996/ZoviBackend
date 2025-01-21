@@ -14,8 +14,13 @@ public class WasteModel {
     private String type;
     private String quantity;
     private String date;
+
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    private String location;
+    private String dayOfRecycling;
+    private String status = "false";
     @PrePersist
     public void generateId() {
         if (this.id == null) {

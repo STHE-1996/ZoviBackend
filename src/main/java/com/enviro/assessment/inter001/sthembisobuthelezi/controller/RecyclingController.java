@@ -49,4 +49,10 @@ public class RecyclingController {
         }
     }
 
+    @GetMapping("/getAllRecyclingList")
+    public ResponseEntity<?> getAllRecyclingList() {
+        List<RecyclingBinLocations> recyclingBinLocations = recyclingBinService.getAllRecycling();
+        return ResponseEntity.ok(recyclingBinLocations);
+    }
+
 }
