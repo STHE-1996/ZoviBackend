@@ -8,7 +8,7 @@
 		<version>3.3.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.enviro.assessment.senior001</groupId>
+	<groupId>com.zovi.assessment</groupId>
 	<artifactId>sthembisobuthelezi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sthembisobuthelezi</name>
@@ -96,6 +96,15 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version> <!-- Use the latest version available -->
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
+		</dependency>
+
+
+
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>

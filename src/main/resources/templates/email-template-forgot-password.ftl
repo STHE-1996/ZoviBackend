@@ -146,7 +146,7 @@
 														<tr>
 															<td class="pad">
 																<div class="alignment" align="center" style="line-height:10px">
-																	<div class="fullWidth" style="max-width: 422.5px;"><img src="https://33e5898fee.imgdist.com/pub/bfra/odic50up/q97/y9c/lat/WhatsApp%20Image%202024-03-09%20at%2020.58.34_49b0da1d.jpg" style="display: block; height: auto; border: 0; width: 100%;" width="422.5" alt="Forgot your password?" title="Forgot your password?" height="auto"></div>
+																	<div class="fullWidth" style="max-width: 422.5px;"><img src="" style="display: block; height: auto; border: 0; width: 100%;" width="422.5" alt="Forgot your password?" title="Forgot your password?" height="auto"></div>
 																</div>
 															</td>
 														</tr>
